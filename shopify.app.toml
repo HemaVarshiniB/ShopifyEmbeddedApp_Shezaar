@@ -3,7 +3,7 @@
 client_id = "5c6356e9ba5b37253be43e796e0bef94"
 name = "StripeOnboardApp"
 handle = "stripeonboardapp-2"
-application_url = "https://guatemala-legacy-barbados-millennium.trycloudflare.com"
+application_url = "https://row-destroyed-frederick-cartridge.trycloudflare.com"
 embedded = true
 
 [build]
@@ -26,12 +26,12 @@ api_version = "2025-07"
 scopes = "write_products"
 
 [auth]
-redirect_urls = ["https://guatemala-legacy-barbados-millennium.trycloudflare.com/auth/callback", "https://guatemala-legacy-barbados-millennium.trycloudflare.com/auth/shopify/callback", "https://guatemala-legacy-barbados-millennium.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://row-destroyed-frederick-cartridge.trycloudflare.com/auth/callback", "https://row-destroyed-frederick-cartridge.trycloudflare.com/auth/shopify/callback", "https://row-destroyed-frederick-cartridge.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false
 
 [app_proxy]
-url = "https://guatemala-legacy-barbados-millennium.trycloudflare.com"
+url = "https://row-destroyed-frederick-cartridge.trycloudflare.com"
 subpath = "shezaar"
 prefix= "apps"

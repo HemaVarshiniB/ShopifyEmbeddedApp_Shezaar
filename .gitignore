@@ -15,7 +15,8 @@ database.sqlite
 .env.*
 
 
-
+yarn.lock
+pnpm-lock.yaml
 
 
 /extensions/*/dist

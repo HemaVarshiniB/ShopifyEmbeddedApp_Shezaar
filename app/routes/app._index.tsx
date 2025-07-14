@@ -14,7 +14,7 @@ import {
   TextField,
   ButtonGroup,
 } from "@shopify/polaris";
-import { authenticate } from "../shopify.server";
+import { shopify } from "../shopify.server";
 import { useEffect, useState } from "react";
 
 type ConnectResponse = { url: string } | { error: string };
@@ -22,8 +22,8 @@ type ConnectResponse = { url: string } | { error: string };
 /**
  * LOADER: Fetches the initial setup status from the Spring Boot backend.
  */
-export async function loader({ request }: LoaderFunctionArgs) {
-  await authenticate.admin(request);
+export async function loader({ request, context }: LoaderFunctionArgs) {
+  await shopify(context).authenticate.admin(request);
 
   // Static response, adjust as needed to reflect real Stripe setup state
   return json({
@@ -35,8 +35,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 /**
  * ACTION: Handles all form submissions on this page based on an "intent".
  */
-export async function action({ request }: ActionFunctionArgs) {
-  const { session } = await authenticate.admin(request);
+export async function action({ request, context }: ActionFunctionArgs) {
+  const { session } = await shopify(context).authenticate.admin(request);
   const { shop } = session;
 
   const formData = await request.formData();
@@ -53,7 +53,7 @@ export async function action({ request }: ActionFunctionArgs) {
           return json({ error: "Backend responded with an error." }, { status: 500 });
         }
 
-        const data = await response.json();
+        const data:any = await response.json();
         if (!data.url || typeof data.url !== "string") {
           console.error("Invalid response from backend:", data);
           return json({ error: "Invalid onboarding link response." }, { status: 500 });

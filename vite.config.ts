@@ -1,7 +1,9 @@
-import { vitePlugin as remix } from "@remix-run/dev";
+import { vitePlugin as remix, cloudflareDevProxyVitePlugin } from "@remix-run/dev";
 import { installGlobals } from "@remix-run/node";
+import { getLoadContext } from "./load-context";
 import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import path from "path";
 
 installGlobals({ nativeFetch: true });
 
@@ -51,6 +53,9 @@ export default defineConfig({
     },
   },
   plugins: [
+    cloudflareDevProxyVitePlugin({
+      getLoadContext,
+    }),
     remix({
       ignoredRouteFiles: ["**/.*"],
       future: {
@@ -64,8 +69,21 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  ssr: {
+    resolve: {
+      conditions: ["workerd", "worker", "browser"],
+    },
+  },
+  resolve: {
+    mainFields: ["browser", "module", "main"],
+    alias: {
+      // Optional: cleaner imports
+      '@': path.resolve(__dirname, 'app'),
+    }
+  },
   build: {
     assetsInlineLimit: 0,
+    minify: true,
   },
   optimizeDeps: {
     include: ["@shopify/app-bridge-react", "@shopify/polaris"],
