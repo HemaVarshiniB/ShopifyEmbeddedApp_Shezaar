@@ -5,6 +5,8 @@ import {
   shopifyApp,
 } from "@shopify/shopify-app-remix/server";
 import type { AppLoadContext } from "@remix-run/node";
+import { MemorySessionStorage } from '@shopify/shopify-app-session-storage-memory';
+
 
 export const shopify = (context: AppLoadContext) =>
   shopifyApp({
@@ -14,13 +16,10 @@ export const shopify = (context: AppLoadContext) =>
     scopes: context.cloudflare.env.SCOPES?.split(","),
     appUrl: context.cloudflare.env.SHOPIFY_APP_URL || "",
     authPathPrefix: "/auth",
-    // sessionStorage: new PrismaSessionStorage(
-    //   prisma(context.cloudflare.env.DATABASE_URL),
-    // ),
+    sessionStorage: new MemorySessionStorage(),
     distribution: AppDistribution.AppStore,
     future: {
       unstable_newEmbeddedAuthStrategy: true,
-      removeRest: true,
     },
     ...(process.env.SHOP_CUSTOM_DOMAIN
       ? { customShopDomains: [process.env.SHOP_CUSTOM_DOMAIN] }
