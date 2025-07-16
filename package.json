@@ -51,7 +51,7 @@
     "prettier": "^3.2.4",
     "typescript": "^5.2.2",
     "vite": "^6.2.2",
-    "wrangler": "^0.0.0-f7c347a67"
+    "wrangler": "^3.28.2"
   },
   "workspaces": [
     "extensions/*"
